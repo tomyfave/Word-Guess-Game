@@ -20,10 +20,6 @@ var remainingGuesses = 0;       // How many tries the player has left
 var hasFinished = false;        // Flag for 'press any key to try again'     
 var wins = 0;                   // How many wins has the player racked up
 
-// Game sounds
-var keySound = new Audio('./assets/sounds/Typewriter_Sound_Effect.mp3');
-var winSound = new Audio('./assets/sounds/You_win_sound_effect.mp3');
-var loseSound = new Audio('./assets/sounds/The_price_is_right_losing_sound.mp3');
 
 // Reset our game-level variables
 function resetGame() {
@@ -36,8 +32,7 @@ function resetGame() {
     guessedLetters = [];
     guessingWord = [];
 
-    // Make sure the hangman image is cleared
-    document.getElementById("hangmanImage").src = "";
+
 
     // Build the guessing word and clear it out
     for (var i = 0; i < selectableWords[currentWordIndex].length; i++) {
@@ -48,6 +43,8 @@ function resetGame() {
     document.getElementById("pressKeyTryAgain").style.cssText= "display: none";
     document.getElementById("gameover-image").style.cssText = "display: none";
     document.getElementById("youwin-image").style.cssText = "display: none";
+    document.getElementById("Keanuwin-image").style.cssText = "display: none";
+    document.getElementById("Keanulose-image").style.cssText = "display: none";
 
     // Show display
     updateDisplay();
@@ -72,10 +69,7 @@ function updateDisplay() {
 };
 
 
-// Updates the image depending on how many guesses
-function updateHangmanImage() {
-    document.getElementById("hangmanImage").src = "assets/images/" + (maxTries - remainingGuesses) + ".png";
-};
+
 
 // This function takes a letter and finds all instances of 
 // appearance in the string and replaces them in the guess word.
@@ -93,7 +87,7 @@ function evaluateGuess(letter) {
     // if there are no indicies, remove a guess and update the hangman image
     if (positions.length <= 0) {
         remainingGuesses--;
-        updateHangmanImage();
+        //updateHangmanImage();
     } else {
         // Loop through all the indicies and replace the '_' with a letter.
         for(var i = 0; i < positions.length; i++) {
@@ -105,9 +99,9 @@ function evaluateGuess(letter) {
 function checkWin() {
     if(guessingWord.indexOf("_") === -1) {
         document.getElementById("youwin-image").style.cssText = "display: block";
+        document.getElementById("Keanuwin-image").style.cssText = "display: block";
         document.getElementById("pressKeyTryAgain").style.cssText= "display: block";
         wins++;
-        winSound.play();
         hasFinished = true;
     }
 };
@@ -117,8 +111,8 @@ function checkWin() {
 function checkLoss()
 {
     if(remainingGuesses <= 0) {
-        loseSound.play();
         document.getElementById("gameover-image").style.cssText = "display: block";
+        document.getElementById("Keanulose-image").style.cssText = "display: block";
         document.getElementById("pressKeyTryAgain").style.cssText = "display:block";
         hasFinished = true;
     }
@@ -146,7 +140,6 @@ document.onkeydown = function(event) {
     } else {
         // Check to make sure a-z was pressed.
         if(event.keyCode >= 65 && event.keyCode <= 90) {
-            keySound.play();
             makeGuess(event.key.toUpperCase());
             updateDisplay();
             checkWin();

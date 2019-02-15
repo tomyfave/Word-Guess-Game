@@ -27,7 +27,9 @@ h4,h5,h6 {
 
 #pressKeyTryAgain, 
 #gameover-image, 
-#youwin-image { display: none;}
+#youwin-image { 
+    display: none;}
+    
 .gameplay-column {
     padding-top: 20px;
     border: 3px solid #fff;
